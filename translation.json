@@ -1,7 +1,7 @@
 {
   "widgets": {
     "list": {
-      "noImages": {
+      "smallThumbs": {
         "filters": {
           "all": "All"
         },
