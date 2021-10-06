@@ -2,6 +2,8 @@ window.ui = window.ui || {};
 Fliplet.Widget.instance('list-thumb-s', function(data) {
   var $container = $(this);
 
+  $container.translate({ swipeToSaveLabel: data.swipeToSaveLabel || 'My list' });
+
   function authenticateImages() {
     _.forEach(data.items, function(item) {
       if (!_.get(item, 'imageConf.url') || !Fliplet.Media.isRemoteUrl(item.imageConf.url)) {
