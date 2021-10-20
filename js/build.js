@@ -2,7 +2,9 @@ window.ui = window.ui || {};
 Fliplet.Widget.instance('list-thumb-s', function(data) {
   var $container = $(this);
 
-  $container.translate({ swipeToSaveLabel: data.swipeToSaveLabel || T('widgets.list.smallThumbs.defaultListName') });
+  var swipeToSaveLabel = data.swipeToSaveLabel || T('widgets.list.smallThumbs.defaultListName');
+
+  $container.translate({ swipeToSaveLabel: swipeToSaveLabel });
 
   function authenticateImages() {
     _.forEach(data.items, function(item) {
