@@ -36,7 +36,7 @@ Fliplet.Widget.instance('list-thumb-s', function(data) {
 
   if (data.swipeToSave) {
     ui['swipeSavedList' + $container.attr('data-list-thumb-s-uuid')] = new SwipeSaveList(this, {
-      savedListLabel: data.swipeToSaveLabel || T('widgets.list.smallThumbs.defaultListName')
+      savedListLabel: swipeToSaveLabel
     });
   }
 
