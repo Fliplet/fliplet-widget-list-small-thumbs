@@ -2,6 +2,10 @@ window.ui = window.ui || {};
 Fliplet.Widget.instance('list-thumb-s', function(data) {
   var $container = $(this);
 
+  var swipeToSaveLabel = data.swipeToSaveLabel || T('widgets.list.smallThumbs.defaultListName');
+
+  $container.translate({ swipeToSaveLabel: swipeToSaveLabel });
+
   function authenticateImages() {
     _.forEach(data.items, function(item) {
       if (!_.get(item, 'imageConf.url') || !Fliplet.Media.isRemoteUrl(item.imageConf.url)) {
@@ -32,7 +36,7 @@ Fliplet.Widget.instance('list-thumb-s', function(data) {
 
   if (data.swipeToSave) {
     ui['swipeSavedList' + $container.attr('data-list-thumb-s-uuid')] = new SwipeSaveList(this, {
-      savedListLabel: data.swipeToSaveLabel || 'My list'
+      savedListLabel: swipeToSaveLabel
     });
   }
 
