@@ -4,11 +4,10 @@ Fliplet.Widget.instance('list-thumb-s', function(data) {
 
   Fliplet().then(function() {
     $container.translate();
+    $container.translate({ swipeToSaveLabel: swipeToSaveLabel });
   });
 
   var swipeToSaveLabel = data.swipeToSaveLabel || T('widgets.list.smallThumbs.defaultListName');
-
-  $container.translate({ swipeToSaveLabel: swipeToSaveLabel });
 
   function authenticateImages() {
     _.forEach(data.items, function(item) {
