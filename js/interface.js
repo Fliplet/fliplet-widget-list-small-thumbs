@@ -8,7 +8,7 @@ var linkPromises = [];
 var page = Fliplet.Widget.getPage();
 var omitPages = page ? [page.id] : [];
 
-if (_.isUndefined(data.items)) {
+if (FlipletSmallThumbUtils.isUndefined(data.items)) {
   data.items = [];
 }
 
@@ -19,7 +19,7 @@ var templates = {
   panel: template('list-item-thumb-s')
 };
 
-var debounceSave = _.debounce(save, 500);
+var debounceSave = FlipletSmallThumbUtils.debounce(save, 500);
 
 // Indicate dragging state
 var dragging = false;
@@ -45,18 +45,14 @@ setTimeout(function() {
 
       save();
 
-      _.remove(linkPromises, {
-        id: itemId
-      });
+    FlipletSmallThumbUtils.remove(linkPromises, function(p) { return p.id === itemId; });
 
       $('.panel-collapse.in').collapse('hide');
       ui.item.css('height', ui.helper.find('.panel-heading').outerHeight() + 2);
     },
     stop: function(event, ui) {
       var itemId = $(ui.item).data('id');
-      var movedItem = _.find(data.items, function(item) {
-        return item.id === itemId;
-      });
+      var movedItem = FlipletSmallThumbUtils.find(data.items, function(item) { return item.id === itemId; });
 
       // sets up new provider
       $('[data-id="' + itemId + '"] .add-link').html('');
@@ -66,7 +62,7 @@ setTimeout(function() {
         attribute: 'data-id'
       });
 
-      data.items = _.sortBy(data.items, function(item) {
+      data.items = FlipletSmallThumbUtils.sortBy(data.items, function(item) {
         return sortedIds.indexOf(item.id);
       });
 
@@ -87,12 +83,8 @@ $('.tab-content')
     var $item = $(this).closest('[data-id], .panel');
     var id = $item.data('id');
 
-    _.remove(data.items, {
-      id: id
-    });
-    _.remove(linkPromises, {
-      id: id
-    });
+    FlipletSmallThumbUtils.remove(data.items, function(item) { return item.id === id; });
+    FlipletSmallThumbUtils.remove(linkPromises, function(p) { return p.id === id; });
 
     $(this).parents('.panel').remove();
     checkPanelLength();
@@ -108,9 +100,7 @@ $('.tab-content')
 
     var $item = $(this).closest('[data-id], .panel');
     var id = $item.data('id');
-    var item = _.find(data.items, {
-      id: id
-    });
+    var item = FlipletSmallThumbUtils.find(data.items, { id: id });
 
     initImageProvider(item);
 
@@ -123,9 +113,7 @@ $('.tab-content')
   .on('click', '.image-remove', function() {
     var $item = $(this).closest('[data-id], .panel');
     var id = $item.data('id');
-    var item = _.find(data.items, {
-      id: id
-    });
+    var item = FlipletSmallThumbUtils.find(data.items, { id: id });
 
     item.imageConf = null;
     $(this).parents('.add-image-holder').find('.add-image').text('Add image');
@@ -139,9 +127,7 @@ $('.tab-content')
 
     var $item = $(this).closest('[data-id], .panel');
     var id = $item.data('id');
-    var item = _.find(data.items, {
-      id: id
-    });
+    var item = FlipletSmallThumbUtils.find(data.items, { id: id });
 
     initIconProvider(item);
 
@@ -154,9 +140,7 @@ $('.tab-content')
   .on('click', '.icon-remove', function() {
     var $item = $(this).closest('[data-id], .panel');
     var id = $item.data('id');
-    var item = _.find(data.items, {
-      id: id
-    });
+    var item = FlipletSmallThumbUtils.find(data.items, { id: id });
 
     var iconBak = item.icon;
 
@@ -215,12 +199,8 @@ $('.tab-content')
 
     // Get item ID / Get provider / Get item
     var itemID = $(this).parents('.panel').data('id');
-    var itemProvider = _.find(linkPromises, function(provider) {
-      return provider.id === itemID;
-    });
-    var item = _.find(data.items, function(item) {
-      return item.id === itemID;
-    });
+    var itemProvider = FlipletSmallThumbUtils.find(linkPromises, function(provider) { return provider.id === itemID; });
+    var item = FlipletSmallThumbUtils.find(data.items, { id: itemID });
 
     // Init the link provider when the accordion opens
     if (!itemProvider && item) {
@@ -337,10 +317,10 @@ function onIconClose(item) {
 function onImageClose(item) {
   imageProvider.close();
 
-  if (_.isEmpty(item.imageConf)) {
-    $('[data-id="' + item.id + '"] .add-image-holder').find('.add-image').text('Add image');
-    $('[data-id="' + item.id + '"] .add-image-holder').find('.thumb-holder').addClass('hidden');
-  }
+if (FlipletSmallThumbUtils.isEmpty(item.imageConf)) {
+  $('[data-id="' + item.id + '"] .add-image-holder').find('.add-image').text('Add image');
+  $('[data-id="' + item.id + '"] .add-image-holder').find('.thumb-holder').addClass('hidden');
+}
 
   imageProvider = null;
 }
@@ -506,9 +486,9 @@ Fliplet.Widget.onSaveRequest(function() {
 });
 
 function save(notifyComplete, dragStop) {
-  _.forEach(data.items, function(item) {
-    item.description = $('#list-item-desc-' + item.id).val();
-    item.title = $('#list-item-title-' + item.id).val();
+  FlipletSmallThumbUtils.forEach(data.items, function(item) {
+  item.description = $('#list-item-desc-' + item.id).val();
+  item.title = $('#list-item-title-' + item.id).val();
   });
 
   data.swipeToSaveLabel =

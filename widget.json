@@ -15,11 +15,11 @@
       "fliplet-core",
       "fliplet-studio-ui",
       "jquery-ui",
-      "lodash",
       "handlebars",
       "bootstrap"
     ],
     "assets": [
+      "js/utils.js",
       "js/interface.js",
       "css/interface.css"
     ]
@@ -29,11 +29,11 @@
       "fliplet-core",
       "bootstrap-css",
       "font-awesome",
-      "lodash",
       "list-swipe",
       "mixitup"
     ],
     "assets": [
+      "js/utils.js",
       "js/build.js",
       "css/build.css"
     ]

@@ -16,13 +16,15 @@ Fliplet.Widget.instance('list-thumb-s', function(data) {
   });
 
   function authenticateImages() {
-    _.forEach(data.items, function(item) {
-      if (!_.get(item, 'imageConf.url') || !Fliplet.Media.isRemoteUrl(item.imageConf.url)) {
+    FlipletSmallThumbUtils.forEach(data.items, function(item) {
+      var url = FlipletSmallThumbUtils.get(item, 'imageConf.url');
+
+      if (!url || !Fliplet.Media.isRemoteUrl(url)) {
         return;
       }
 
       $container.find('.has-image[data-thumb-s-item-id="' + item.id + '"] .list-image').css({
-        backgroundImage: 'url(' + Fliplet.Media.authenticate(item.imageConf.url) + ')'
+        backgroundImage: 'url(' + Fliplet.Media.authenticate(url) + ')'
       });
     });
   }
@@ -34,11 +36,11 @@ Fliplet.Widget.instance('list-thumb-s', function(data) {
       return;
     }
 
-    var itemData = _.find(data.items, {
+    var itemData = FlipletSmallThumbUtils.find(data.items, {
       id: $(this).data('thumb-s-item-id')
     });
 
-    if (_.get(itemData, 'linkAction') && !_.isEmpty(itemData.linkAction)) {
+    if (FlipletSmallThumbUtils.get(itemData, 'linkAction') && !FlipletSmallThumbUtils.isEmpty(itemData.linkAction)) {
       Fliplet.Navigate.to(itemData.linkAction);
     }
   });
