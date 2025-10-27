@@ -27,7 +27,7 @@ Fliplet.Widget.instance('list-thumb-s', function(data) {
     });
   }
 
-  $container.on('click', '.linked[data-thumb-s-item-id]', function(event) {
+  $container.on('click', '.linked[data-thumb-s-item-id]', async function(event) {
     event.preventDefault();
 
     if ($(this).parents('.list-swipe.swiping').length) {
@@ -39,7 +39,15 @@ Fliplet.Widget.instance('list-thumb-s', function(data) {
     });
 
     if (_.get(itemData, 'linkAction') && !_.isEmpty(itemData.linkAction)) {
-      Fliplet.Navigate.to(itemData.linkAction);
+      const action = itemData.linkAction || {};
+
+      try {
+        action.dynamicContext = await Fliplet.Widget.getDynamicContext($(this));
+      } catch (error) {
+        action.dynamicContext = {};
+      }
+
+      Fliplet.Navigate.to(action);
     }
   });
 
