@@ -14,8 +14,8 @@
     "dependencies": [
       "fliplet-core",
       "fliplet-studio-ui",
+      "fliplet-utils",
       "jquery-ui",
-      "lodash",
       "handlebars",
       "bootstrap"
     ],
@@ -27,9 +27,9 @@
   "build": {
     "dependencies": [
       "fliplet-core",
+      "fliplet-utils",
       "bootstrap-css",
       "font-awesome",
-      "lodash",
       "list-swipe",
       "mixitup"
     ],
